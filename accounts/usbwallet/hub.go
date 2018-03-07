@@ -72,8 +72,13 @@ func NewLedgerHub() (*Hub, error) {
 }
 
 // NewTrezorHub creates a new hardware wallet manager for Trezor devices.
-func NewTrezorHub() (*Hub, error) {
+func NewTrezorTHub() (*Hub, error) {
 	return newHub(TrezorScheme, 0x534c, []uint16{0x0001 /* Trezor 1 */}, 0xff00, 0, newTrezorDriver)
+}
+
+// NewTrezorTHub creates a new hardware wallet manager for Trezor T devices.
+func NewTrezorHub() (*Hub, error) {
+	return newHub(TrezorScheme, 0x1209, []uint16{0x53c1 /* Trezor T */}, 0xff00, 0, newTrezorDriver)
 }
 
 // newHub creates a new hardware wallet manager for generic USB devices.

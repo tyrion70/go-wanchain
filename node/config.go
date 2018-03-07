@@ -403,14 +403,23 @@ func makeAccountManager(conf *Config) (*accounts.Manager, string, error) {
 		if ledgerhub, err := usbwallet.NewLedgerHub(); err != nil {
 			log.Warn(fmt.Sprintf("Failed to start Ledger hub, disabling: %v", err))
 		} else {
+			log.Warn("Started ledgerhub")
 			backends = append(backends, ledgerhub)
 		}
 		// Start a USB hub for Trezor hardware wallets
 		if trezorhub, err := usbwallet.NewTrezorHub(); err != nil {
 			log.Warn(fmt.Sprintf("Failed to start Trezor hub, disabling: %v", err))
 		} else {
+			log.Warn("Started trezorhub")
 			backends = append(backends, trezorhub)
 		}
+                // Start a USB hub for Trezor T hardware wallets
+                if trezorthub, err := usbwallet.NewTrezorTHub(); err != nil {
+                        log.Warn(fmt.Sprintf("Failed to start Trezor T hub, disabling: %v", err))
+                } else {
+			log.Warn("Started trezorThub")
+                        backends = append(backends, trezorthub)
+                }
 	}
 	return accounts.NewManager(backends...), ephemeral, nil
 }
